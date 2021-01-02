@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#map {
+    /* height: 100vh;
+    width: 100vw; */
+    bottom: 0; 
+    position: absolute; 
+    top: 0; 
+    width: 100%; 
+}
+
+#menu {
+    font-family: 'Open Sans', sans-serif;
+    bottom: 20px;
+    right: 50px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+}
