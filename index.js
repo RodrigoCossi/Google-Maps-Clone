@@ -22,6 +22,9 @@ function setupMap(center) {
         center: center,
         zoom: 12
     });
+    var marker = new mapboxgl.Marker()
+        .setLngLat(center)
+        .addTo(map);
 
     const nav = new mapboxgl.NavigationControl(options = {
         showCompass: true,
