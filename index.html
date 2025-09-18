@@ -26,12 +26,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗺️</text></svg>">
     
-    <!-- Mapbox GL JS - Updated to latest version with fallback -->
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js' 
-            onerror="loadMapboxFallback()"></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
-    
-    <!-- Fallback script loader -->
+    <!-- Fallback script loader - Must be defined first -->
     <script>
         function loadMapboxFallback() {
             console.warn('Primary Mapbox CDN failed, trying fallback...');
@@ -50,21 +45,7 @@
             link.href = 'https://cdn.jsdelivr.net/npm/mapbox-gl@3.0.1/dist/mapbox-gl.css';
             document.head.appendChild(link);
         }
-    </script>
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="index.css">
-
-    <!-- Mapbox Directions Plugin - Updated version with fallback -->
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.js"
-            onerror="loadDirectionsFallback()"></script>
-    <link
-        rel="stylesheet"
-        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.css"
-        type="text/css"
-    />
-    
-    <script>
+        
         function loadDirectionsFallback() {
             console.warn('Primary Directions CDN failed, trying fallback...');
             var script = document.createElement('script');
@@ -77,6 +58,23 @@
             document.head.appendChild(link);
         }
     </script>
+
+    <!-- Mapbox GL JS - Updated to latest version with fallback -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js' 
+            onerror="loadMapboxFallback()"></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="index.css">
+
+    <!-- Mapbox Directions Plugin - Updated version with fallback -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.js"
+            onerror="loadDirectionsFallback()"></script>
+    <link
+        rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.css"
+        type="text/css"
+    />
     
     <!-- Scripts -->
     <script src="index.js" defer></script>
