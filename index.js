@@ -1,10 +1,63 @@
-// Mapbox access token
-mapboxgl.accessToken = 'pk.eyJ1IjoicmNvc3NpIiwiYSI6ImNramVvMWFsNzNlNnMyc25xZnhrdnE4NnYifQ.z0AZz2kc5jEXGPUO_f19tA';
+// Check if Mapbox GL JS is loaded
+function isMapboxLoaded() {
+    return typeof mapboxgl !== 'undefined' && mapboxgl.Map;
+}
+
+// Set Mapbox access token only if mapboxgl is available
+function setMapboxToken() {
+    if (typeof mapboxgl !== 'undefined') {
+        mapboxgl.accessToken = 'pk.eyJ1IjoicmNvc3NpIiwiYSI6ImNramVvMWFsNzNlNnMyc25xZnhrdnE4NnYifQ.z0AZz2kc5jEXGPUO_f19tA';
+        return true;
+    }
+    return false;
+}
+
+// Initialize the application with retry logic
+function tryInitialize() {
+    // Check if Mapbox failed to load from all sources
+    if (window.mapboxLoadFailed) {
+        showError('Failed to load map resources from all sources. This may be due to network issues or ad-blockers blocking Mapbox. Please check your internet connection and disable ad-blockers for this site.');
+        return;
+    }
+    
+    // Check if Mapbox is available
+    if (!isMapboxLoaded()) {
+        // Wait a bit more for potential fallback loading
+        setTimeout(tryInitialize, 1000);
+        return;
+    }
+    
+    // Set token and initialize
+    if (setMapboxToken()) {
+        initializeMap();
+    } else {
+        showError('Failed to configure map. Please refresh the page.');
+    }
+}
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
-    initializeMap();
+    // Give some time for scripts to load, then try to initialize
+    setTimeout(function() {
+        tryInitialize();
+    }, 500);
 });
+
+function showError(message) {
+    const loadingElement = document.getElementById('loading');
+    if (loadingElement) {
+        loadingElement.textContent = message;
+        loadingElement.style.color = '#dc3545';
+        loadingElement.style.maxWidth = '400px';
+        loadingElement.style.textAlign = 'center';
+        loadingElement.style.lineHeight = '1.4';
+        loadingElement.style.padding = '20px';
+        loadingElement.style.backgroundColor = '#f8f9fa';
+        loadingElement.style.border = '1px solid #dee2e6';
+        loadingElement.style.borderRadius = '8px';
+        loadingElement.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+    }
+}
 
 function initializeMap() {
     // Check if geolocation is supported
@@ -42,6 +95,11 @@ function errorCallback(error) {
 
 function setupMap(center) {
     try {
+        // Verify Mapbox is still available
+        if (!isMapboxLoaded()) {
+            throw new Error('Mapbox GL JS is not available');
+        }
+
         // Hide loading indicator
         const loadingElement = document.getElementById('loading');
         
@@ -64,10 +122,7 @@ function setupMap(center) {
 
         map.on('error', function(e) {
             console.error('Map error:', e);
-            if (loadingElement) {
-                loadingElement.textContent = 'Error loading map. Please refresh the page.';
-                loadingElement.style.color = '#dc3545';
-            }
+            showError('Error loading map. This could be due to network issues, ad-blockers, or an invalid Mapbox token. Please refresh the page or check your internet connection.');
         });
 
         // Add marker for user location
@@ -85,13 +140,21 @@ function setupMap(center) {
         });
         map.addControl(nav, 'bottom-right');
 
-        // Add directions control
-        const directions = new MapboxDirections({
-            accessToken: mapboxgl.accessToken,
-            unit: 'metric',
-            profile: 'mapbox/driving'
-        });
-        map.addControl(directions, 'top-left');
+        // Add directions control (with error handling)
+        try {
+            if (typeof MapboxDirections !== 'undefined') {
+                const directions = new MapboxDirections({
+                    accessToken: (typeof mapboxgl !== 'undefined') ? mapboxgl.accessToken : '',
+                    unit: 'metric',
+                    profile: 'mapbox/driving'
+                });
+                map.addControl(directions, 'top-left');
+            } else {
+                console.warn('Mapbox Directions plugin not available');
+            }
+        } catch (directionsError) {
+            console.warn('Failed to load directions control:', directionsError);
+        }
 
         // Setup layer switching
         setupLayerSwitching(map);
@@ -107,11 +170,7 @@ function setupMap(center) {
 
     } catch (error) {
         console.error('Error setting up map:', error);
-        const loadingElement = document.getElementById('loading');
-        if (loadingElement) {
-            loadingElement.textContent = 'Failed to initialize map. Please check your internet connection.';
-            loadingElement.style.color = '#dc3545';
-        }
+        showError('Failed to initialize map. This may be due to network issues, ad-blockers blocking Mapbox resources, or an invalid access token. Please check your internet connection and try again.');
     }
 }
 

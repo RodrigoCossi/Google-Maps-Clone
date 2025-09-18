@@ -26,23 +26,60 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗺️</text></svg>">
     
-    <!-- Mapbox GL JS -->
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+    <!-- Mapbox GL JS - Updated to latest version with fallback -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js' 
+            onerror="loadMapboxFallback()"></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
+    
+    <!-- Fallback script loader -->
+    <script>
+        function loadMapboxFallback() {
+            console.warn('Primary Mapbox CDN failed, trying fallback...');
+            // Try loading from a different CDN or version as fallback
+            var script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/mapbox-gl@3.0.1/dist/mapbox-gl.js';
+            script.onerror = function() {
+                console.error('All Mapbox CDN sources failed');
+                // Trigger the error handling in the main script
+                window.mapboxLoadFailed = true;
+            };
+            document.head.appendChild(script);
+            
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdn.jsdelivr.net/npm/mapbox-gl@3.0.1/dist/mapbox-gl.css';
+            document.head.appendChild(link);
+        }
+    </script>
     
     <!-- Styles -->
     <link rel="stylesheet" href="index.css">
+
+    <!-- Mapbox Directions Plugin - Updated version with fallback -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.js"
+            onerror="loadDirectionsFallback()"></script>
+    <link
+        rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.3.1/mapbox-gl-directions.css"
+        type="text/css"
+    />
+    
+    <script>
+        function loadDirectionsFallback() {
+            console.warn('Primary Directions CDN failed, trying fallback...');
+            var script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/@mapbox/mapbox-gl-directions@4.3.1/dist/mapbox-gl-directions.js';
+            document.head.appendChild(script);
+            
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdn.jsdelivr.net/npm/@mapbox/mapbox-gl-directions@4.3.1/dist/mapbox-gl-directions.css';
+            document.head.appendChild(link);
+        }
+    </script>
     
     <!-- Scripts -->
     <script src="index.js" defer></script>
-
-    <!-- Mapbox Directions Plugin -->
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
-    <link
-        rel="stylesheet"
-        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css"
-        type="text/css"
-    />
 </head>
 <body>
     <!-- Loading indicator -->
