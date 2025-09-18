@@ -21,6 +21,8 @@ A fully functional Google Maps clone built with **Mapbox API** that provides an 
 
 Experience the live demo here: **[https://rodrigocossi.github.io/Google-Maps-Clone/](https://rodrigocossi.github.io/Google-Maps-Clone/)**
 
+> **Note:** The live demo will be automatically deployed via GitHub Pages when this pull request is merged to the main branch. The deployment process typically takes a few minutes to complete.
+
 ## 🏃‍♂️ How to Run Locally
 
 ### Prerequisites
@@ -117,6 +119,33 @@ Google-Maps-Clone/
    - Click on the map to set start and end points
    - Follow the generated route
 4. **Switch Map Styles**: Use the radio buttons in the bottom-right to switch between street and satellite views
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Map not loading or showing blank screen:**
+- Check your internet connection
+- Ensure you're not using an ad blocker that might block Mapbox requests
+- Try refreshing the page
+- Check browser console for error messages
+
+**Geolocation not working:**
+- Make sure you allow location access when prompted
+- Check if location services are enabled in your browser settings
+- The app will fallback to London coordinates if geolocation fails
+
+**Directions not working:**
+- Ensure you have a stable internet connection
+- Try clicking directly on the map to set waypoints
+- Check if the Mapbox Directions API is accessible
+
+### Browser Support
+If you're experiencing issues, try using a supported browser version:
+- Chrome 65+ ✅
+- Firefox 58+ ✅  
+- Safari 12+ ✅
+- Edge 79+ ✅
 
 ## 🤝 Contributing
 
