@@ -3,28 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Google Maps Clone - Interactive Mapping Experience</title>
+    <meta name="title" content="Google Maps Clone - Interactive Mapping Experience">
+    <meta name="description" content="A fully functional Google Maps clone built with Mapbox API featuring geolocation, directions, navigation controls, and multiple map styles.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rodrigocossi.github.io/Google-Maps-Clone/">
+    <meta property="og:title" content="Google Maps Clone - Interactive Mapping Experience">
+    <meta property="og:description" content="A fully functional Google Maps clone built with Mapbox API featuring geolocation, directions, navigation controls, and multiple map styles.">
+    <meta property="og:image" content="https://user-images.githubusercontent.com/59088238/169894152-94a3eb81-f373-497e-b593-fcfd4eaf05d4.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://rodrigocossi.github.io/Google-Maps-Clone/">
+    <meta property="twitter:title" content="Google Maps Clone - Interactive Mapping Experience">
+    <meta property="twitter:description" content="A fully functional Google Maps clone built with Mapbox API featuring geolocation, directions, navigation controls, and multiple map styles.">
+    <meta property="twitter:image" content="https://user-images.githubusercontent.com/59088238/169894152-94a3eb81-f373-497e-b593-fcfd4eaf05d4.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗺️</text></svg>">
+    
+    <!-- Mapbox GL JS -->
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+    
+    <!-- Styles -->
     <link rel="stylesheet" href="index.css">
+    
+    <!-- Scripts -->
     <script src="index.js" defer></script>
 
-    <!-- map directions -->
+    <!-- Mapbox Directions Plugin -->
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
     <link
         rel="stylesheet"
         href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css"
         type="text/css"
     />
-    <title>Rodrigo Maps</title>
 </head>
 <body>
+    <!-- Loading indicator -->
+    <div id="loading" class="loading">Loading map...</div>
 
     <div id='map'></div>
     <div id="menu">
         <input id="streets-v11" type="radio" name="rtoggle" value="streets" checked="checked"/>
-        <label for="streets-v11">streets</label>
+        <label for="streets-v11">Streets</label>
         <input id="satellite-v9" type="radio" name="rtoggle" value="satellite" />
-        <label for="satellite-v9">satellite</label>
+        <label for="satellite-v9">Satellite</label>
     </div>
     
 </body>
